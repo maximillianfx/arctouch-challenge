@@ -1,0 +1,16 @@
+.movie-panel {
+    margin-top: 30px;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    grid-column: span 4;
+}
+
+.center-content {
+    text-align: -webkit-center;
+}
