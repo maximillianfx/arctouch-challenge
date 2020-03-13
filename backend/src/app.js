@@ -1,6 +1,9 @@
 var express = require('express');
+const cors = require('./config/cors')
 const axios = require('axios').default;
-var app = express();
+var server = express();
+
+server.use(cors);
 
 var API_KEY = '1f54bd990f1cdfb230adb312546d765d';
 var URL_BASE = 'https://api.themoviedb.org/3/movie/';
@@ -9,7 +12,7 @@ var URL_BASE_IMAGE_POSTER = 'https://image.tmdb.org/t/p/w342/';
 var URL_BASE_IMAGE_BACKDROP = 'https://image.tmdb.org/t/p/w780/';
 var LANGUAGE = 'es-US';
 
-app.get('/movies', function (req, res) {
+server.get('/movies', function (req, res) {
     if (!req.query.search) {
         res.send({ code: 404, data: 'The search needs a valid string. Ex.: /api/v1/movies?search=text' });
     } else if(!req.query.page || !parseInt(req.query.page)) {
@@ -27,7 +30,7 @@ app.get('/movies', function (req, res) {
     }
 });
 
-app.get('/movies/upcoming', function (req, res) {
+server.get('/movies/upcoming', function (req, res) {
     if (!req.query.page || !parseInt(req.query.page)) {
         res.send({ code: 404, data: 'Page must be a integer' })
 
@@ -44,7 +47,7 @@ app.get('/movies/upcoming', function (req, res) {
     }
 });
 
-app.get('/movies/:id', function (req, res) {
+server.get('/movies/:id', function (req, res) {
     if (!req.params.id || !parseInt(req.params.id)) {
         res.send({ code: 404, data: 'ID must be an integer' })
     } else {
@@ -60,7 +63,7 @@ app.get('/movies/:id', function (req, res) {
     }
 });
 
-app.get('/backdrop/:imageLink', function (req, res) {
+server.get('/backdrop/:imageLink', function (req, res) {
 
     if (!req.params.imageLink) {
         res.send({ code: 404, data: 'Invalid imagelink' });
@@ -81,7 +84,7 @@ app.get('/backdrop/:imageLink', function (req, res) {
     }
 });
 
-app.get('/poster/:imageLink', function (req, res) {
+server.get('/poster/:imageLink', function (req, res) {
 
     if (!req.params.imageLink) {
         res.send({ code: 404, data: 'ID must be an integer/Invalid imagelink' });
@@ -102,6 +105,6 @@ app.get('/poster/:imageLink', function (req, res) {
     }
 });
 
-app.listen(3000, function () {
+server.listen(3000, function () {
     console.log('Arctouch App listening on port 3000!');
 });
