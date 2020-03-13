@@ -9,6 +9,7 @@
             <div class="columns">
                 <div class="adjust-paginator">
                     <div class="column">
+
                         <ngb-pagination [(page)]="currentPage" [pageSize]="generalData?.results?.length"
                             [collectionSize]="generalData?.total_results" (pageChange)="onPageChange(currentPage)"></ngb-pagination>
                     </div>
