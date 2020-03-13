@@ -8,31 +8,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoviesPanelComponent implements OnInit {
 
-  currentPage: number = 1;
+  currentPage: number = 0;
+  generalData: any;
   movies: [] = [];
 
   constructor(private movieService: MoviesService) { }
 
   ngOnInit(): void {
 
+    console.log("Current page: " + this.currentPage);
     this.getUpcomingMovies();
 
   }
 
   getUpcomingMovies(page: number = 1) {
-    
-    if (page != 1) {
-      this.currentPage = page;
-    }
-
     const moviesObservable = this.movieService.getUpcomingMovies(page);
     moviesObservable.subscribe(res => {
       if (res['code'] == 200) {
+        this.generalData = res['data'];
         this.movies = res['data']['results'];
       } else {
         console.log("Fail in the upcoming movies request");
       }
     });
+  }
+
+  public onPageChange(pageNum: number): void {
+    this.getUpcomingMovies(pageNum);
   }
 
 }

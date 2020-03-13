@@ -1,7 +1,6 @@
 .movie-card {
   width: 250px;
   height: auto;
-  background-color: red;
 }
 
 .movie-card:hover .movie-info-overlay {
@@ -18,13 +17,21 @@
   height: 25rem;
 }
 
+.no-image {
+  height: 25rem;
+  width: 100%;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  background: #cdcdcd;
+}
+
 .movie-info-overlay {
   position: absolute;
   height: 25rem;
   width: 250px;
   opacity: 0;
   transition: 0.5s ease;
-  background-color: #c2c2c2;
+  background-color: #f56565;
   cursor: pointer;
 }
 
@@ -41,4 +48,5 @@
 .movie-info-text {
     font-family: sans-serif;
     font-weight: 700;
+    color: white;
 }

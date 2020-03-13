@@ -2,10 +2,20 @@
     <div class="movie-info-overlay">
         <div class="text">
             <p class="movie-info-text">{{movie.original_title}}</p>
-            <p>{{movie.release_date}}</p>
+            <p style="color: white;">{{movie.release_date}}</p>
         </div>
     </div>
-    <div class="movie-poster">
+    <div *ngIf="posterImage" class="movie-poster">
         <img [src]="posterImage" class="adjust-image" alt="Poster"/>
+    </div>
+
+    <div *ngIf="!posterImage" class="movie-poster">
+        <div class="no-image">
+            <div class="text">
+                <p class="movie-info-text">{{movie.original_title}}</p>
+                <p style="color: white;">{{movie.release_date}}</p>
+                <p style="color: white;">Image unavailable</p>
+            </div>
+        </div>
     </div>
 </div>

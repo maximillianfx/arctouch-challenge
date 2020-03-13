@@ -1,7 +1,9 @@
 .full-screen {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: auto;
+    background-color: #ececec;
+    min-height: 100vh;
 }
 
 .title-app {

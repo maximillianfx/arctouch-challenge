@@ -18,7 +18,12 @@ export class MovieCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.movie['release_date'] = this.formatDate(this.movie['release_date']);
-    this.getPoster(this.movie['poster_path']);
+    if (this.movie['poster_path']) {
+      this.getPoster(this.movie['poster_path']);
+    } else if(this.movie['backdrop_path']) {
+      this.getBackdrop(this.movie['backdrop_path']);
+    }
+    
   }
 
   transform(imageBase64){
@@ -36,6 +41,23 @@ export class MovieCardComponent implements OnInit {
     }
 
     const moviesObservable = this.movieService.getMoviePoster(imageLink);
+    moviesObservable.subscribe(res => {
+      if (res['code'] == 200) {
+        this.posterImage = this.transform("data:image/jpg;base64, " + res['data']);
+      } else {
+        console.log("Fail in the poster movie request");
+      }
+    });
+
+  }
+
+  getBackdrop(imageLink: string) {
+
+    if (!imageLink) {
+      return '';
+    }
+
+    const moviesObservable = this.movieService.getMovieBackdrop(imageLink);
     moviesObservable.subscribe(res => {
       if (res['code'] == 200) {
         this.posterImage = this.transform("data:image/jpg;base64, " + res['data']);

@@ -10,6 +10,11 @@ import { InputSearchComponent } from './components/input-search/input-search.com
 import { MoviesPanelComponent } from './components/movies-panel/movies-panel.component';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+
 
 
 @NgModule({
@@ -19,12 +24,14 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     DetailComponent,
     InputSearchComponent,
     MoviesPanelComponent,
-    MovieCardComponent
+    MovieCardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    NgbPaginationModule
   ],
   providers: [MoviesService],
   bootstrap: [AppComponent]
