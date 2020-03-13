@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  url_base: 'http://localhost:3000/movies/',
+  url_base_poster: 'http://localhost:3000/poster',
+  url_base_backdrop: 'http://localhost:3000/backdrop'
 };
 
 /*

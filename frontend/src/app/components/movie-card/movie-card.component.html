@@ -1,8 +1,11 @@
 <div class="movie-card">
-    <div class="movie-poster">
-
+    <div class="movie-info-overlay">
+        <div class="text">
+            <p class="movie-info-text">{{movie.original_title}}</p>
+            <p>{{movie.release_date}}</p>
+        </div>
     </div>
-    <div class="movie-info">
-
+    <div class="movie-poster">
+        <img [src]="posterImage" class="adjust-image" alt="Poster"/>
     </div>
 </div>

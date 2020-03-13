@@ -1,3 +1,4 @@
+import { MoviesService } from './services/movies.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,6 +9,8 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { InputSearchComponent } from './components/input-search/input-search.component';
 import { MoviesPanelComponent } from './components/movies-panel/movies-panel.component';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -20,9 +23,10 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [MoviesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
