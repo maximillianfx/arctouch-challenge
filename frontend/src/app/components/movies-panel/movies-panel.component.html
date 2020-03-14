@@ -2,7 +2,7 @@
     <div class="columns">
         <div class="column">
             <div class="columns is-multiline">
-                <div *ngFor="let item of movies" class="column is-3 center-content">
+                <div *ngFor="let item of movies" class="column center-content">
                     <app-movie-card [movie]="item"></app-movie-card>
                 </div>
             </div>
@@ -10,7 +10,7 @@
                 <div class="adjust-paginator">
                     <div class="column">
 
-                        <ngb-pagination [(page)]="currentPage" [pageSize]="generalData?.results?.length"
+                        <ngb-pagination [(page)]="currentPage" [pageSize]="generalData?.results?.length" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
                             [collectionSize]="generalData?.total_results" (pageChange)="onPageChange(currentPage)"></ngb-pagination>
                     </div>
                 </div>

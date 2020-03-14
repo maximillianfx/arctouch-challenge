@@ -1,3 +1,4 @@
+import { SearchService } from './../../services/search.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputSearchComponent implements OnInit {
 
-  constructor() { }
+  text: string = '';
+
+  constructor(private searchService: SearchService) { }
 
   ngOnInit(): void {
+  }
+
+  onKeydown(event) {
+    if (event.key === "Enter") {
+      this.searchService.setSearch(this.text);
+    } else if (event.key === "Escape") {
+      this.searchService.setSearch(null);
+    }
   }
 
 }

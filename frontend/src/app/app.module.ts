@@ -1,3 +1,4 @@
+import { SearchService } from './services/search.service';
 import { MoviesService } from './services/movies.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,7 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -30,12 +32,13 @@ import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
     NgbPaginationModule
   ],
-  providers: [MoviesService],
+  providers: [MoviesService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

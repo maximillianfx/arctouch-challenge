@@ -4,7 +4,7 @@
             <p class="movie-info-text">{{movie.title}}</p>
             <p *ngFor="let item of genresList" style="color: white;">{{item.name}}</p>
             <p *ngIf="genresList.length == 0" style="color: white;">Genre unavailable</p>
-            <p style="color: white; font-weight: 500;">{{movie.release_date}}</p>
+            <p style="color: white; font-weight: 500;">{{movie.release_date || 'Release date unavailable'}}</p>
         </div>
     </div>
     <div *ngIf="posterImage" class="movie-poster">
@@ -15,7 +15,7 @@
         <div class="no-image">
             <div class="text">
                 <p class="movie-info-text">{{movie.title}}</p>
-                <p style="color: white;">{{movie.release_date}}</p>
+                <p style="color: white;">{{movie.release_date || 'Release date unavailable'}}</p>
                 <p style="color: white;">Image unavailable</p>
             </div>
         </div>

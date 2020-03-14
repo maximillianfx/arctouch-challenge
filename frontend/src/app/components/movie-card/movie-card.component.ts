@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs';
 import { MoviesService } from './../../services/movies.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
@@ -15,10 +16,17 @@ export class MovieCardComponent implements OnInit {
   posterImage: any;
   genresList: any = [];
 
+  genresSubscription: any;
+  posterSubscription: any;
+  backdropSubscription: any;
+
   constructor(private movieService: MoviesService, private sanitizer:DomSanitizer, private router: Router) { }
 
   ngOnInit(): void {
     this.movie['release_date'] = this.formatDate(this.movie['release_date']);
+    if (this.movie['release_date'].length != 10) {
+      this.movie['release_date'] = "";
+    }
     this.getGenres({ids: this.movie['genre_ids']});
     if (this.movie['poster_path']) {
       this.getPoster(this.movie['poster_path']);
@@ -33,12 +41,16 @@ export class MovieCardComponent implements OnInit {
   }
 
   formatDate(date: string) {
-    return date.substring(5,7)+'/'+date.substring(8,10)+'/'+date.substring(0,4);
+    if (date && date.length > 0) {
+      return date.substring(5,7)+'/'+date.substring(8,10)+'/'+date.substring(0,4);
+    }
+    return '';
+    
   }
 
   getGenres(ids) {
-    const moviesObservable = this.movieService.getMovieGenres(ids);
-    moviesObservable.subscribe(res => {
+    this.genresSubscription = this.movieService.getMovieGenres(ids);
+    this.genresSubscription.subscribe(res => {
       if (res['code'] == 200) {
         this.genresList = res['data'];
       } else {
@@ -53,8 +65,8 @@ export class MovieCardComponent implements OnInit {
       return '';
     }
 
-    const moviesObservable = this.movieService.getMoviePoster(imageLink);
-    moviesObservable.subscribe(res => {
+    this.posterSubscription = this.movieService.getMoviePoster(imageLink);
+    this.posterSubscription.subscribe(res => {
       if (res['code'] == 200) {
         this.posterImage = this.transform("data:image/jpg;base64, " + res['data']);
       } else {
@@ -70,8 +82,8 @@ export class MovieCardComponent implements OnInit {
       return '';
     }
 
-    const moviesObservable = this.movieService.getMovieBackdrop(imageLink);
-    moviesObservable.subscribe(res => {
+    this.backdropSubscription = this.movieService.getMovieBackdrop(imageLink);
+    this.backdropSubscription.subscribe(res => {
       if (res['code'] == 200) {
         this.posterImage = this.transform("data:image/jpg;base64, " + res['data']);
       } else {

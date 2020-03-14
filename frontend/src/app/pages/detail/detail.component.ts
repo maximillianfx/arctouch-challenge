@@ -1,5 +1,5 @@
 import { MoviesService } from './../../services/movies.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
@@ -17,21 +17,29 @@ export class DetailComponent implements OnInit {
   genresList: any = [];
   genres: string;
 
+  idSubscription: any;
+  movieDetailSubscription: any;
+  posterSubscription: any;
+  backdropSubscription: any;
+
   constructor(private movieService: MoviesService, private sanitizer: DomSanitizer, public activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    this.idSubscription = this.activatedRoute.params.subscribe(params => {
       this.getMovieDetail(params['id']);
     });
 
   }
 
   getMovieDetail(idMovie) {
-    const moviesObservable = this.movieService.getMovieByID(idMovie);
-    moviesObservable.subscribe(res => {
+    this.movieDetailSubscription = this.movieService.getMovieByID(idMovie);
+    this.movieDetailSubscription.subscribe(res => {
       if (res['code'] == 200) {
         this.movie = res['data'];
         this.movie['release_date'] = this.formatDate(this.movie['release_date']);
+        if (this.movie['release_date'].length != 10) {
+          this.movie['release_date'] = "";
+        }
         this.formatGenresList(this.movie['genres']);
         this.getMovieImage();
       } else {
@@ -54,8 +62,8 @@ export class DetailComponent implements OnInit {
       return '';
     }
 
-    const moviesObservable = this.movieService.getMoviePoster(imageLink);
-    moviesObservable.subscribe(res => {
+    this.posterSubscription = this.movieService.getMoviePoster(imageLink);
+    this.posterSubscription.subscribe(res => {
       if (res['code'] == 200) {
         this.posterImage = this.transform("data:image/jpg;base64, " + res['data']);
       } else {
@@ -71,8 +79,8 @@ export class DetailComponent implements OnInit {
       return '';
     }
 
-    const moviesObservable = this.movieService.getMovieBackdrop(imageLink);
-    moviesObservable.subscribe(res => {
+    this.backdropSubscription = this.movieService.getMovieBackdrop(imageLink);
+    this.backdropSubscription.subscribe(res => {
       if (res['code'] == 200) {
         this.backdropImage = this.transform("data:image/jpg;base64, " + res['data']);
       } else {
@@ -87,7 +95,10 @@ export class DetailComponent implements OnInit {
   }
 
   formatDate(date: string) {
-    return date.substring(5, 7) + '/' + date.substring(8, 10) + '/' + date.substring(0, 4);
+    if (date && date.length > 0) {
+      return date.substring(5,7)+'/'+date.substring(8,10)+'/'+date.substring(0,4);
+    }
+    return '';
   }
 
   formatGenresList(genres) {
@@ -98,5 +109,6 @@ export class DetailComponent implements OnInit {
     this.genres = formatedArray.join(', ')
 
   }
+  
 
 }
