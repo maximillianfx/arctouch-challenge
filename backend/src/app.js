@@ -51,8 +51,8 @@ server.post('/genres', function (req, res) {
     } else {
         var resultado = [];
         req.body.ids.forEach((value) => {
-            const genreName = getGenreName(value.value);
-            resultado.push({ id: value.value, name: genreName});
+            const genreName = getGenreName(value);
+            resultado.push({ id: value, name: genreName});
         });
         res.send({ code: 200, data: resultado });
     }
