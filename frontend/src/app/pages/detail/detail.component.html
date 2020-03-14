@@ -1,6 +1,6 @@
 <div class="full-screen">
     <div class="title-app">
-        <p>{{movie?.original_title}}</p>
+        <p>{{movie?.title}}</p>
     </div>
     <div class="columns" style="margin-bottom: 0;">
         <div *ngIf="posterImage" class="column is-4">
@@ -19,13 +19,13 @@
         </div>
         <div class="column">
             <div *ngIf="posterImage || backdropImage" class="info-box">
-                <p><strong>Title:</strong> {{movie?.original_title}}</p>
+                <p><strong>Title:</strong> {{movie?.title}}</p>
                 <p><strong>Release date:</strong> {{movie?.release_date || 'Release date unavailable'}}</p>
                 <p><strong>Genre:</strong> {{genres || 'Genre unavailable' }}</p>
                 <p><strong>Overview:</strong> {{movie?.overview || 'Overview unavailable'}}</p>
             </div>
             <div *ngIf="!posterImage && !backdropImage" class="info-box adjust-no-image">
-                <p style="width: 100%;"><strong>Title:</strong> {{movie?.original_title}}</p>
+                <p style="width: 100%;"><strong>Title:</strong> {{movie?.title}}</p>
                 <p style="width: 100%;"><strong>Release date:</strong> {{movie?.release_date || 'Release date unavailable' }}</p>
                 <p style="width: 100%;"><strong>Genre:</strong> {{genres || 'Genre unavailable' }}</p>
                 <p style="width: 100%;"><strong>Overview:</strong> {{movie?.overview || 'Overview unavailable'}}</p>
