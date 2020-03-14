@@ -1,1 +1,37 @@
-<p>detail works!</p>
+<div class="full-screen">
+    <div class="title-app">
+        <p>{{movie?.original_title}}</p>
+    </div>
+    <div class="columns" style="margin-bottom: 0;">
+        <div *ngIf="posterImage" class="column is-4">
+            <div class="image-box">
+                <div *ngIf="posterImage" class="movie-poster">
+                    <img [src]="posterImage" alt="Poster" />
+                </div>
+            </div>
+        </div>
+        <div *ngIf="backdropImage" class="column is-4">
+            <div class="image-box backdrop-adjust">
+                <div *ngIf="backdropImage">
+                    <img [src]="backdropImage" alt="Backdrop" />
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div *ngIf="posterImage || backdropImage" class="info-box">
+                <p><strong>Title:</strong> {{movie?.original_title}}</p>
+                <p><strong>Release date:</strong> {{movie?.release_date}}</p>
+                <p><strong>Genre:</strong> {{genres || 'Genre unavailable' }}</p>
+                <p><strong>Overview:</strong> {{movie?.overview || 'Overview unavailable'}}</p>
+            </div>
+            <div *ngIf="!posterImage && !backdropImage" class="info-box adjust-no-image">
+                <p style="width: 100%;"><strong>Title:</strong> {{movie?.original_title}}</p>
+                <p style="width: 100%;"><strong>Release date:</strong> {{movie?.release_date}}</p>
+                <p style="width: 100%;"><strong>Genre:</strong> {{genres || 'Genre unavailable' }}</p>
+                <p style="width: 100%;"><strong>Overview:</strong> {{movie?.overview || 'Overview unavailable'}}</p>
+                <p style="width: 100%;"><strong>Image:</strong> Image unavailable </p>
+            </div>
+
+        </div>
+    </div>
+</div>

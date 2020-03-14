@@ -71,6 +71,26 @@ export class MoviesService {
 
   }
 
+  public getMovieGenres(body) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const moviesGenresObservable = new Observable(observer => {
+      this.httpClient.post(environment.url_base_genre, body, httpOptions)
+        .subscribe(
+          res => {
+            observer.next(res);
+          }, err => {
+            observer.next(err);
+          });
+    });
+    return moviesGenresObservable;
+
+  }
+
   public getMovieBackdrop(imageLink: string) {
     const httpOptions = {
       headers: new HttpHeaders({
