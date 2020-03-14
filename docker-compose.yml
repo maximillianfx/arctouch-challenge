@@ -1,0 +1,19 @@
+# Comando para executar
+# sudo docker-compose -f docker-compose.yml up -d --build api
+version: '3.4'
+
+services:
+  api:
+    container_name: container_api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+  web:
+    container_name: container_web
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'

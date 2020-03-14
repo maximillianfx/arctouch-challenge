@@ -1,18 +1,7 @@
 FROM node:current-slim as webapp
 WORKDIR /app
 
-RUN apt-get update
-
-RUN apt-get install -y git
-
-RUN git clone https://github.com/maximillianfx/arctouch-challenge.git
-
-RUN git checkout development
-
-RUN git pull
-
-RUN cd frontend
-
+COPY package.json /app/
 RUN npm install
 RUN npm install -g @angular/cli
 COPY ./ /app/
