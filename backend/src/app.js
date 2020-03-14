@@ -1,16 +1,63 @@
 var express = require('express');
 const cors = require('./config/cors')
+var bodyParser = require("body-parser");
 const axios = require('axios').default;
 var server = express();
 
 server.use(cors);
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
 
 var API_KEY = '1f54bd990f1cdfb230adb312546d765d';
 var URL_BASE = 'https://api.themoviedb.org/3/movie/';
 var URL_SEARCH = 'https://api.themoviedb.org/3/search/movie';
 var URL_BASE_IMAGE_POSTER = 'https://image.tmdb.org/t/p/w342/';
-var URL_BASE_IMAGE_BACKDROP = 'https://image.tmdb.org/t/p/w780/';
+var URL_BASE_IMAGE_BACKDROP = 'https://image.tmdb.org/t/p/w300/';
+var URL_BASE_GENRE = 'https://api.themoviedb.org/3/genre/movie/list';
 var LANGUAGE = 'es-US';
+
+var genres = [];
+
+var getGenres = async() => {
+    let res = await axios.get(URL_BASE_GENRE + '?api_key=' + API_KEY + '&language=' + LANGUAGE);
+    let data = res['data']['genres'];
+    genres = data;
+}
+
+server.get('/genres', function (req, res) {
+    if (genres) {
+        res.send({code: 200, data: genres});
+    } else {
+        res.send({code: 500, data: 'Failure to obtain genres'});
+    }
+    
+});
+
+function getGenreName(id) {
+    var obj = genres.find((value) => {
+        if (value.id == id) {
+            return value.name;
+        }
+    });
+    return obj.name;
+}
+
+server.post('/genres', function (req, res) {
+
+    if (!req.body.ids) {
+        res.send({ code: 404 , data: 'No ids provided' });
+    } else if (req.body.ids.length == 0) {
+        res.send({ code: 404 , data: 'No ids provided' });
+    } else {
+        var resultado = [];
+        req.body.ids.forEach((value) => {
+            const genreName = getGenreName(value.value);
+            resultado.push({ id: value.value, name: genreName});
+        });
+        res.send({ code: 200, data: resultado });
+    }
+});
+
 
 server.get('/movies', function (req, res) {
     if (!req.query.search) {
@@ -106,5 +153,6 @@ server.get('/poster/:imageLink', function (req, res) {
 });
 
 server.listen(3000, function () {
+    getGenres();
     console.log('Arctouch App listening on port 3000!');
 });
