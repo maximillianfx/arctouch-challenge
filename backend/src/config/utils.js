@@ -4,7 +4,7 @@ var URL_SEARCH = 'https://api.themoviedb.org/3/search/movie';
 var URL_BASE_IMAGE_POSTER = 'https://image.tmdb.org/t/p/w342/';
 var URL_BASE_IMAGE_BACKDROP = 'https://image.tmdb.org/t/p/w300/';
 var URL_BASE_GENRE = 'https://api.themoviedb.org/3/genre/movie/list';
-var LANGUAGE = 'es-US';
+var LANGUAGE = 'en-US';
 var API_VERSION = 'v1';
 
 module.exports = {
