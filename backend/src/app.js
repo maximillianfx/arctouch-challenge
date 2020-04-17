@@ -1,10 +1,24 @@
 var express = require('express');
-var app = express();
+const cors = require('./config/cors')
+var bodyParser = require("body-parser");
+const axios = require('axios').default;
+var server = express();
+const utils = require('./config/utils')
 
-app.get('/', function (req, res) {
-  res.send('Arctouch Challenge!');
-});
+server.use(cors);
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
 
-app.listen(3000, function () {
-  console.log('Arctouch App listening on port 3000!');
+const movies = require('./controllers/movies');
+movies.controller(server, utils);
+
+const images = require('./controllers/images');
+images.controller(server, utils);
+
+const genres = require('./controllers/genres');
+genres.controller(server, utils);
+
+server.listen(3000, function () {
+    
+    console.log('Arctouch App listening on port 3000!');
 });
